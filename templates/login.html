@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ETL Complexity Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Google Sans', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #4285F4, #34a853);
+        }
+
+        /* Login container */
+        .login-container {
+            background-color: white;
+            padding: 40px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Fade-in animation for the login container */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Title styling */
+        h2 {
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Button styling */
+        .login-button {
+            background-color: #4285F4;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .login-button:hover {
+            background-color: #357ae8;
+            transform: translateY(-2px);
+        }
+
+        .login-button:active {
+            background-color: #2851a3;
+            transform: translateY(0);
+        }
+
+        .login-button i {
+            margin-right: 10px;
+        }
+
+        /* Optional styling for Google logo (if needed) */
+        .google-logo {
+            width: 20px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Welcome to the ETL Complexity Tool</h2>
+        <a href="{{ url_for('login') }}" class="login-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1920px-Google_%22G%22_logo.svg.png" alt="Google Logo" class="google-logo">
+            Login with Google
+        </a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ETL Complexity Analyzer</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Google Sans', sans-serif;
+      background-color: #e9ecef;
+      color: #3c4043;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Animation for fading in page content */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .container {
+      margin-top: 50px;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      animation: slideUp 1s ease-in-out;
+    }
+
+    /* Animation for sliding the container in */
+    @keyframes slideUp {
+      0% {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      color: #1a73e8;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    label {
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    textarea {
+      background-color: #fff;
+      border: 1px solid #dadce0;
+      color: #3c4043;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      height: 120px;
+    }
+
+    .upload-area {
+      border: 2px dashed #ced4da;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      position: relative;
+    }
+
+    .upload-area:hover {
+      background-color: #e9f0fa;
+      transform: scale(1.05);
+    }
+
+    .upload-icon {
+      font-size: 36px;
+      color: #adb5bd;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .file-list {
+      font-size: 14px;
+      color: #6c757d;
+    }
+
+    button[type="submit"] {
+      background-color: #1a73e8;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: none; /* Hide initially */
+    }
+
+    button[type="submit"]:hover {
+      background-color: #1762c4;
+    }
+
+    .google-cloud-logo {
+      display: block;
+      margin: 0 auto 30px;
+      max-width: 150px;
+    }
+
+    #uploadMessage {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #dashboardLink {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    /* Position and style the logout button */
+    .logout-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: #d9534f;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #c9302c;
+    }
+
+    /* Enhanced Cooking Animation */
+    #loadingOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 1000;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    .spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .chef-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      font-size: 1.5rem;
+      animation: cookingAnimation 2s ease-in-out infinite;
+    }
+
+    .chef-image {
+      width: 100px;
+      margin-bottom: 20px;
+      animation: stirAnimation 2s linear infinite;
+    }
+
+    .steam {
+      font-size: 2rem;
+      color: #bbb;
+      animation: steamAnimation 2s ease-in-out infinite;
+    }
+
+    @keyframes stirAnimation {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      50% {
+        transform: rotate(20deg);
+      }
+
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+
+    @keyframes steamAnimation {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+    }
+
+    @keyframes cookingAnimation {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    #loadingMessage {
+      margin-top: 20px;
+    }
+
+    /* Styling the file input hidden but clickable */
+    .upload-area input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .help-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #1a73e8;
+      color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      z-index: 1000;
+    }
+
+    .help-icon:hover {
+      background-color: #1762c4;
+    }
+
+    /* Modal Styles */
+    .help-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+    }
+
+    .help-modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      margin: 50px auto;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+
+    .close-btn {
+      float: right;
+      font-size: 20px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #1a73e8;
+    }
+
+    .check-btn-container {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+    }
+
+    .check-btn-container .btn-primary {
+      background-color: #1a73e8;
+      color: white;
+      font-weight: bold;
+      padding: 8px 15px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .check-btn-container .btn-primary:hover {
+      background-color: #218838;
+    }
+
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <img src="https://cloud.google.com/images/cloud-logo.svg" alt="Google Cloud Logo" class="google-cloud-logo">
+    <div style="text-align: right;">
+      <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+    <div id="button-container" class="check-btn-container"></div>
+    <h1>Assessment Creation</h1>
+
+    <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadForm">
+      <div>
+        <label for="name">Name*:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea>
+      </div>
+
+      <div>
+        <label for="customer">Customer*:</label>
+        <input type="text" id="customer" name="customer" required>
+      </div>
+      <!-- File Upload Areas -->
+      <div><label>Step 1: Upload your Mapping file here</label></div>
+      <div id="uploadArea1" class="upload-area">
+        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+        Drag and drop file here, or click to select
+        <input type="file" name="file1" id="file1" required>
+        <div class="file-list" id="fileList1"></div>
+      </div>
+      
+      <div><label>Step 2: Upload your Map Source to Target file here file here</label></div>
+      <div id="uploadArea2" class="upload-area">
+        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+        Drag and drop file here, or click to select
+        <input type="file" name="file2" id="file2" required>
+        <div class="file-list" id="fileList2"></div>
+      </div>
+
+      <div><label>Step 3: Upload your Table Size file here</label></div>
+      <div id="uploadArea3" class="upload-area">
+        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+        Drag and drop file here, or click to select
+        <input type="file" name="file3" id="file3" required>
+        <div class="file-list" id="fileList3"></div>
+      </div>
+
+      <button type="submit" id="uploadButton">Upload Files</button>
+    </form>
+
+    <div id="uploadMessage"></div>
+    <div id="dashboardLink">
+      <a href="https://lookerstudio.google.com/reporting/1d330bbc-f01c-4fca-9283-a4e2d851a6d9" target="_blank">Go to Dashboard</a>
+    </div>
+  </div>
+
+  <!-- Loading Overlay with Cooking Animation -->
+  <div id="loadingOverlay">
+    <div class="spinner">
+      <div class="chef-container">
+        <img src="https://img.icons8.com/ios/452/chef-hat.png" alt="Chef" class="chef-image">
+        <div class="steam">☁️☁️☁️</div>
+        <div id="loadingMessage">Cooking your report...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Icon -->
+  <div class="help-icon" onclick="openHelpModal()">
+    <i class="fas fa-question"></i>
+  </div>
+
+  <!-- Help Modal -->
+  <div id="helpModal" class="help-modal">
+    <div class="help-modal-content">
+      <span class="close-btn" onclick="closeHelpModal()">&times;</span>
+      <iframe src="{{ url_for('static', filename='help.html') }}" 
+        style="width: 90%; height: 80vh; border: none; margin: 5vh auto;" 
+        allowfullscreen></iframe>
+  </div>
+
+
+  <script>
+    const fileInputs = [document.getElementById('file1'), document.getElementById('file2'), document.getElementById('file3')];
+    const fileLists = [document.getElementById('fileList1'), document.getElementById('fileList2'), document.getElementById('fileList3')];
+    const uploadButton = document.getElementById('uploadButton');
+    const uploadForm = document.getElementById('uploadForm');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const dashboardLink = document.getElementById('dashboardLink');
+
+    fileInputs.forEach((input, index) => {
+      input.addEventListener('change', function () {
+        const files = input.files;
+        displayFileList(files, fileLists[index]);
+        checkFilesSelected();
+      });
+    });
+
+    function displayFileList(files, fileList) {
+      fileList.innerHTML = '';
+      for (const file of files) {
+        fileList.innerHTML += `<p>${file.name}</p>`;
+      }
+    }
+
+    function checkFilesSelected() {
+      const allFilesSelected = fileInputs.every(input => input.files.length > 0);
+      uploadButton.style.display = allFilesSelected ? 'block' : 'none';
+    }
+
+    uploadForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      loadingOverlay.style.display = 'block';
+
+      const formData = new FormData(uploadForm);
+
+      fetch('/upload', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.text())
+        .then(message => {
+          loadingOverlay.style.display = 'none';
+          if (message.startsWith('Files uploaded successfully')) {
+            uploadButton.style.display = 'none';
+            dashboardLink.style.display = 'block';
+          } else {
+            alert(message);
+          }
+        })
+        .catch(error => {
+          loadingOverlay.style.display = 'none';
+          alert('Error uploading files: ' + error);
+        });
+    });
+
+    function openHelpModal() {
+        document.getElementById('helpModal').style.display = 'block';
+      }
+
+      function closeHelpModal() {
+        document.getElementById('helpModal').style.display = 'none';
+      }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fetch user's form entry status
+        fetch('/check_form_entry')
+            .then(response => response.json())
+            .then(data => {
+                if (data.entryExists) {
+                    // If the user has an existing entry, add the button
+                    const buttonContainer = document.getElementById('button-container');
+                    const existingEntryButton = document.createElement('a');
+                    existingEntryButton.href = 'https://lookerstudio.google.com/reporting/1d330bbc-f01c-4fca-9283-a4e2d851a6d9';
+                    existingEntryButton.textContent = 'View Previous assessments';
+                    existingEntryButton.className = 'btn btn-primary';
+                    buttonContainer.appendChild(existingEntryButton);
+                } else {
+                    console.log('No existing entry for user.');
+                }
+            })
+            .catch(error => {
+                console.error('Error checking form entry:', error);
+            });
+    });
+    </script>
+    
+
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+
+</html>
