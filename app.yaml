@@ -10,6 +10,9 @@ instance_class: F2
 
 
 env_variables:
+  GOOGLE_CLIENT_ID: ''
+  GOOGLE_CLIENT_SECRET: ''
+  FLASK_SECRET_KEY: ''
   GOOGLE_CLOUD_PROJECT: "transformers-200"
   BUCKET_NAME: "etl_complexity_tool_src"
   BQ_DATASET: "etl_mig"
