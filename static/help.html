@@ -1,128 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>ETL Complexity Analyzer - Help</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    body {
-      font-family: 'Google Sans', sans-serif;
-      background-color: #f8f9fa;
-      color: #3c4043;
-    }
-
-    .container {
-      margin-top: 50px;
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      max-width: 800px;
-    }
-
-    h1 {
-      color: #1a73e8;
-      text-align: center;
-      margin-bottom: 30px;
-      font-weight: bold;
-    }
-
-    h2 {
-      color: #1a73e8;
-      margin-top: 30px;
-    }
-
-    p {
-      line-height: 1.6;
-    }
-
-    ul {
-      list-style-type: disc;
-      margin-left: 20px;
-    }
-
-    pre {
-      background-color: #f5f5f5;
-      padding: 15px;
-      border-radius: 4px;
-      overflow-x: auto;
-      font-family: monospace;
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETL Complexity Analyzer - Help</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+        }
+        .header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 0 0 25px 25px;
+        }
+        .header h1 {
+            font-weight: 700;
+            font-size: 3.5rem;
+        }
+        .header p {
+            font-size: 1.25rem;
+            font-weight: 300;
+        }
+        .container {
+            margin-top: -80px;
+            position: relative;
+            z-index: 10;
+        }
+        .content-card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-weight: 500;
+            color: #0d6efd;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 20px;
+        }
+        .accordion .card {
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .accordion .card-header {
+            background-color: #f8f9fa;
+            border-radius: 10px !important;
+            border: none;
+            padding: 15px 20px;
+        }
+        .accordion .btn-link {
+            width: 100%;
+            text-align: left;
+            color: #333;
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+        .accordion .btn-link:hover {
+            text-decoration: none;
+        }
+        .accordion .card-body {
+            background: #fdfdff;
+            border-radius: 0 0 10px 10px;
+        }
+        ul, ol {
+            line-height: 1.8;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-size: 90%;
+        }
+    </style>
 </head>
-
 <body>
-  <div class="container">
-    <h1>ETL Complexity Analyzer - Help</h1>
 
-    <h2>Background</h2>
-    <p>The accelerated adoption of cloud platforms like GCP underscores the necessity of migrating legacy ETL implementations. However, accurately estimating the effort involved in ETL migration poses a significant challenge. Inaccurate estimates lead to budget problems, missed deadlines, and a general sense of chaos.</p>
+    <div class="header">
+        <h1>Help & Documentation</h1>
+        <p>Your guide to using the ETL Complexity Analyzer</p>
+    </div>
 
-    <h2>Introduction</h2>
-    <p>The ETL Complexity Analyzer and Estimation Tool is a web-based tool that helps data engineers, customer engineers, and others analyze the complexity of their ETL (Extract, Transform, Load) processes and estimate the resources required to execute them.</p>
+    <div class="container">
+        <div class="content-card">
+            <h2>Introduction</h2>
+            <p>The ETL Complexity Analyzer is a tool designed to help you understand the complexity of your legacy ETL processes and estimate the effort required for migration. By analyzing metadata from your Informatica environment, the tool provides scores that quantify the complexity of your ETL mappings.</p>
+        </div>
 
-    <h2>Key Features</h2>
-    <ul>
-      <li>Analyzes the complexity of ETL processes based on various factors such as data volume, data sources, transformations, and target systems.</li>
-      <li>Provides an estimated time and resource requirements for executing the ETL process.</li>
-      <li>Generates a detailed report with visualizations of the analysis results.</li>
-      <li>Allows users to compare different ETL designs and identify potential complexities.</li>
-    </ul>
+        <div class="content-card">
+            <h2>How to Get Started: Required Files</h2>
+            <p>To use the analyzer, you first need to extract three specific CSV files from your Informatica environment. Follow the steps below for each file.</p>
+            <div id="accordion" class="accordion">
 
-    <h2>Key Outcomes</h2>
-    <ul>
-      <li>Improved understanding of ETL process complexity.</li>
-      <li>Accurate estimation of time and resources required for ETL execution.</li>
-    </ul>
+                <!-- File 1 Card -->
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Step 1: <code>raw_etl_mappings_data.csv</code>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <strong>Purpose:</strong> This file is the most critical as it details all the transformations within your ETL mappings.
+                            <hr>
+                            <strong>Required Columns:</strong>
+                            <ul>
+                                <li><code>project_name</code></li>
+                                <li><code>folder_name</code></li>
+                                <li><code>workflow_name</code></li>
+                                <li><code>mapping_name</code></li>
+                                <li><code>transformation_name</code></li>
+                                <li><code>transformation_type</code></li>
+                                <li><code>source_name</code></li>
+                                <li><code>target_name</code></li>
+                            </ul>
+                            <strong>How to Obtain:</strong> You can query Informatica's metadata repository views (e.g., <code>REP_ALL_MAPPINGS</code>, <code>REP_TARG_MAPPING</code>, <code>REP_WFLOW_MAPPING</code>) to gather this information. Joining these views will provide a comprehensive list of all transformations linked to their respective mappings and workflows.
+                        </div>
+                    </div>
+                </div>
 
+                <!-- File 2 Card -->
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Step 2: <code>src_etl_map_tgt_tbl.csv</code>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <strong>Purpose:</strong> This file creates a clear link between source and target tables for each mapping.
+                            <hr>
+                            <strong>Required Columns:</strong>
+                            <ul>
+                                <li><code>project_name</code></li>
+                                <li><code>mapping_name</code></li>
+                                <li><code>source_table</code></li>
+                                <li><code>target_table</code></li>
+                            </ul>
+                            <strong>How to Obtain:</strong> This data can also be extracted from the Informatica metadata repository. You will need to query views that store source and target table information for each mapping, such as <code>REP_SRC_MAPPING</code> and <code>REP_TARG_MAPPING</code>.
+                        </div>
+                    </div>
+                </div>
 
-    <h2>Calculate Complexity and Estimates</h2>
-    <p>The complexity of a certain mapping is driven by the below factors:</p>
-    <ul>
-      <li>Complexity of the transformations used.</li>
-      <li>Volume of data processed.</li>
-      <li>Size of tables - source, target.</li>
-      <li>PL/SQL complexity.</li>
-    </ul>
-    <p>Hence, each mapping needs to be assigned an “Effort Score” on the basis of three contributing scores:</p>
-    <ul>
-      <li>Mapping_complexity_score.</li>
-      <li>Table_size_score.</li>
-      <li>Large_mapping_score.</li>
-    </ul>
-    <p>Effort Score = mapping_complexity_score * table_size_score * large_mapping_score</p>
-    <p>The composite “Effort Score” is a multiplication of the three scores as it creates an interaction between the scores. By doing so, the final score is amplified when individual scores are high and diminished when any individual score is low.</p>
-    <p>Each mapping is comprised of transformations like below:</p>
-    <ol>
-      <li>SOURCE_DEFINITION</li>
-      <li>TARGET_DEFINITION</li>
-      <li>SOURCE_QUALIFIER</li>
-      <li>UPDATE_STRATEGY</li>
-      <li>EXPRESSION</li>
-      <li>STORED_PROCEDURE</li>
-      <li>SEQUENCE</li>
-      <li>AGGREGATOR</li>
-      <li>FILTER</li>
-      <li>LOOKUP_PROCEDURE</li>
-      <li>JOINER</li>
-      <li>NORMALIZER</li>
-      <li>ROUTER</li>
-      <li>RANK</li>
-      <li>MAPPLET</li>
-      <li>INPUT_TRANSFORMATION</li>
-      <li>OUTPUT_TRANSFORMATION</li>
-      <li>XML_SOURCE_QUALIFIER</li>
-      <li>SORTER</li>
-      <li>TRANSACTION_CONTROL</li>
-      <li>CUSTOM_TRANSFORMATION</li>
-    </ol>
-    <p>A mapping can also be nested with another mapping (maplet) to populate a certain target table. Each transformation is given a weight/multiplier.</p>
+                <!-- File 3 Card -->
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Step 3: <code>src_etl_tbl_sizes.csv</code>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            <strong>Purpose:</strong> This file provides the size of the source tables, which is a key factor in complexity scoring.
+                            <hr>
+                            <strong>Required Columns:</strong>
+                            <ul>
+                                <li><code>table_name</code></li>
+                                <li><code>table_size</code></li>
+                            </ul>
+                            <strong>How to Obtain:</strong> This information is not in the Informatica repository. You must collect it directly from your source database systems. The method will vary depending on your database (e.g., Oracle, SQL Server, Teradata). You will typically need to query the database's system catalog or information schema to get table sizes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  </div>
+        <div class="content-card">
+            <h2>Understanding the Complexity Score</h2>
+            <p>The "Effort Score" for each mapping is calculated based on three factors, creating a composite score that reflects the overall migration complexity:</p>
+            <p class="text-center font-weight-bold my-3">
+                <code>Effort Score = mapping_complexity_score * table_size_score * large_mapping_score</code>
+            </p>
+            <p>This score is influenced by the types of transformations used in a mapping. Each transformation is assigned a weight, and the tool uses these weights to calculate the final score. More complex transformations (like Custom Transformations or Stored Procedures) contribute more to the score.</p>
+        </div>
+    </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
